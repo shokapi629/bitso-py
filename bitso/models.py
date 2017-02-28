@@ -137,7 +137,7 @@ class Ticker(BaseModel):
             setattr(self, param, val)
 
     def __repr__(self):
-        return "Ticker(book={book},ask={ask}, bid={bid}, high={high}, last={last}, low={low}, created_at={created_at}, vwaplow={vwap})".format(
+        return "Ticker(book={book},ask={ask},bid={bid}, high={high}, last={last}, low={low}, volume={volume}, created_at={created_at}, vwap={vwap})".format(
             book=self.book,
             ask=self.ask,
             bid=self.bid,
@@ -145,6 +145,7 @@ class Ticker(BaseModel):
             low=self.low,
             last=self.last,
             vwap=self.vwap,
+            volume=self.volume,
             created_at=self.created_at)
 
 class PublicOrder(BaseModel):
