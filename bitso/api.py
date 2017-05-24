@@ -373,7 +373,13 @@ class Api(object):
         resp = self._request_url(url, 'GET', params=parameters, private=True)
         return [Funding._NewFromJsonDict(entry) for entry in resp['payload']]
 
+
     
+    def order_trades(self, oid):
+        url = '%s/order_trades/%s' % (self.base_url, oid)
+        resp = self._request_url(url, 'GET', params={}, private=True)
+        return [UserTrade._NewFromJsonDict(x) for x in resp['payload']]
+
         
     def user_trades(self, tids=[], book=None, marker=None, limit=25, sort='desc'):
         """Get a list of the user's transactions
@@ -402,9 +408,9 @@ class Api(object):
         tids = map(str, tids)
         if tids:
             url+='%s/' % ('-'.join(tids))            
-        if book:
-            url+='?book=%s' % book
         parameters = {}
+        if book:
+            parameters['book'] = book
         if marker:
             parameters['marker'] = marker
         if limit:
