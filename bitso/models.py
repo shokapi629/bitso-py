@@ -83,6 +83,8 @@ class AccountStatus(BaseModel):
             'client_id': kwargs.get('client_id'),
             'status': kwargs.get('status'),
             'cellphone_number': kwargs.get('cellphone_number'),
+            'cellphone_number_stored': kwargs.get('cellphone_number_stored'),
+            'email_stored': kwargs.get('email_stored'),
             'official_id': kwargs.get('official_id'),
             'proof_of_residency': kwargs.get('proof_of_residency'),
             'signed_contract': kwargs.get('signed_contract'),
