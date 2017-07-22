@@ -264,20 +264,34 @@ class Fee(BaseModel):
             fee_percent=self.fee_percent)
 
     
+class WithdrawalFees(BaseModel):
+    """ A class that represents a Bitso user's withdrawal fees """
+
+    def __init__(self, **kwargs):
+        self.currencies = []
+        for currency,fee in kwargs.iteritems():
+            self.currencies.append(currency)
+            setattr(self, currency, Decimal(fee))
+
+    def __repr__(self):
+        return "WithdawalFees(curencies={currencies})".format(
+            currencies=','.join(self.currencies))
+
 
 
 class Fees(BaseModel):
     """ A class that represents a Bitso user's fees """
 
     def __init__(self, **kwargs):
-        self.books = []
+        self.book_fees = []
         for fee in kwargs.get('fees'):
-            self.books.append(fee['book'])
+            self.book_fees.append(fee['book'])
             setattr(self, fee['book'], Fee._NewFromJsonDict(fee))
+        setattr(self, 'withdrawal_fees', WithdrawalFees._NewFromJsonDict(kwargs.get('withdrawal_fees')))
 
     def __repr__(self):
-        return "Fees(books={books})".format(
-            books=','.join(self.books))
+        return "Fees(book_fees={book_fees},withdrawal_fees={currencies})".format(
+            book_fees=','.join(self.book_fees),currencies=','.join(self.withdrawal_fees.currencies))
 
 
 
