@@ -170,6 +170,10 @@ Fees(books=btc_mxn,eth_mxn)
 Fee(book=btc_mxn, fee_percent=0.0000)
 >>> fees.btc_mxn.fee_percent
 Decimal('0.8500')
+>>> fees.withdrawal_fees
+WithdawalFees(curencies=eth,btc)
+>>> fees.withdrawal_fees.btc
+Decimal('0.001')
 
 ```
 
