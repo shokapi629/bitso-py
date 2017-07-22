@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #
 #The MIT License (MIT)
@@ -91,11 +92,11 @@ class Api(object):
         return AvailableBooks._NewFromJsonDict(resp)
 
         
-    def ticker(self, book):
+    def ticker(self, book=None):
         """Get a Bitso price ticker.
 
         Args:
-          book (str):
+          book (str, optional):
             Specifies which book to use. 
             
         Returns:
@@ -104,9 +105,14 @@ class Api(object):
         """
         url = '%s/ticker/' % self.base_url
         parameters = {}
-        parameters['book'] = book
+        if book is not None:
+            parameters['book'] = book
         resp = self._request_url(url, 'GET', params=parameters)
+        if book is None:
+            return [Ticker._NewFromJsonDict(x) for x in resp['payload']]
         return Ticker._NewFromJsonDict(resp['payload'])
+    
+
 
 
     def order_book(self, book, aggregate=True):
