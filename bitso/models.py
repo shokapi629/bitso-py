@@ -290,7 +290,7 @@ class Fees(BaseModel):
         setattr(self, 'withdrawal_fees', WithdrawalFees._NewFromJsonDict(kwargs.get('withdrawal_fees')))
 
     def __repr__(self):
-        return "Fees(books={bookss},withdrawal_fees={currencies})".format(
+        return "Fees(books={books},withdrawal_fees={currencies})".format(
             books=','.join(self.books),currencies=','.join(self.withdrawal_fees.currencies))
 
 
