@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #
 #The MIT License (MIT)
@@ -91,11 +92,11 @@ class Api(object):
         return AvailableBooks._NewFromJsonDict(resp)
 
         
-    def ticker(self, book):
+    def ticker(self, book=None):
         """Get a Bitso price ticker.
 
         Args:
-          book (str):
+          book (str, optional):
             Specifies which book to use. 
             
         Returns:
@@ -104,9 +105,14 @@ class Api(object):
         """
         url = '%s/ticker/' % self.base_url
         parameters = {}
-        parameters['book'] = book
+        if book is not None:
+            parameters['book'] = book
         resp = self._request_url(url, 'GET', params=parameters)
+        if book is None:
+            return [Ticker._NewFromJsonDict(x) for x in resp['payload']]
         return Ticker._NewFromJsonDict(resp['payload'])
+    
+
 
 
     def order_book(self, book, aggregate=True):
@@ -373,7 +379,13 @@ class Api(object):
         resp = self._request_url(url, 'GET', params=parameters, private=True)
         return [Funding._NewFromJsonDict(entry) for entry in resp['payload']]
 
+
     
+    def order_trades(self, oid):
+        url = '%s/order_trades/%s' % (self.base_url, oid)
+        resp = self._request_url(url, 'GET', params={}, private=True)
+        return [UserTrade._NewFromJsonDict(x) for x in resp['payload']]
+
         
     def user_trades(self, tids=[], book=None, marker=None, limit=25, sort='desc'):
         """Get a list of the user's transactions
@@ -402,9 +414,9 @@ class Api(object):
         tids = map(str, tids)
         if tids:
             url+='%s/' % ('-'.join(tids))            
-        if book:
-            url+='?book=%s' % book
         parameters = {}
+        if book:
+            parameters['book'] = book
         if marker:
             parameters['marker'] = marker
         if limit:

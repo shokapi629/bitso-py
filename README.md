@@ -1,6 +1,6 @@
 # bitso-py #
 
-A python wrapper for the [Bitso API](https://bitso.com/api_info/) 
+A Python 2 wrapper for the [Bitso API](https://bitso.com/api_info/) 
 
 [![Build Status](https://travis-ci.org/mariorz/python-bitso.svg?branch=master)](https://travis-ci.org/mariorz/python-bitso) [![Requirements Status](https://requires.io/github/mariorz/python-bitso/requirements.svg?branch=master)](https://requires.io/github/mariorz/python-bitso/requirements/?branch=master) 
 
@@ -170,6 +170,10 @@ Fees(books=btc_mxn,eth_mxn)
 Fee(book=btc_mxn, fee_percent=0.0000)
 >>> fees.btc_mxn.fee_percent
 Decimal('0.8500')
+>>> fees.withdrawal_fees
+WithdawalFees(curencies=eth,btc)
+>>> fees.withdrawal_fees.btc
+Decimal('0.001')
 
 ```
 
@@ -370,14 +374,7 @@ u'true' #on success
 
 >>> order = api.place_order(book='btc_mxn', side='buy', order_type='limit', major='.01', price='7000.00')
 >>> order
-Order(oid=0zx3f7b8k5jrx1vj123y4nfkd9sguihvhfywm957epycqtvsvzq0m6k0fdgavy5d, side=buy, price=7000.00, original_amount=0.01000000, created_datetime=2016-04-22 14:43:13)
->>> order.oid
-u'0zx3f7b8k5jrx1vj123y4nfkd9sguihvhfywm957epycqtvsvzq0m6k0fdgavy5d'
->>> order.price
-Decimal('7000.00')
->>> order.amount
-Decimal('0.01000000')
-
+{"oid":"jli47Q3gQqXflk1n"}
 ```
 
 
@@ -459,7 +456,7 @@ ok   # Returns 'ok' on success
 ##         - string
 
 
->>> api.mxn_withdrawal(amount='3500.0', first_names='Satoshi', last_names='Nakamoto', clabe=CLABE, notes_ref=NOTES_REF, numeric_ref=NUMERIC_REF)
+>>> api.spei_withdrawal(amount='3500.0', first_names='Satoshi', last_names='Nakamoto', clabe=CLABE, notes_ref=NOTES_REF, numeric_ref=NUMERIC_REF)
 ok   # Returns 'ok' on success
 ```
 
@@ -609,7 +606,8 @@ if __name__ == '__main__':
     listener = BasicBitsoListener()
     client = websocket.Client(listener)
     channels = ['trades']
-    client.connect(channels)
+    book = 'btc_mxn'
+    client.connect(channels, book)
 
 ```
 
@@ -902,7 +900,7 @@ updates | List | List of (TradeUpdate or OrderUpdate) objects |
 
 **Minor** denotes fiat currencies such as Mexican Peso (MXN), etc
 
-An order book is always referred to in the API as “Major_Minor”. For example: “**btc_mxn**”
+An order book is always referred to in the API as "Major_Minor". For example: "**btc_mxn**"
 
 
 # Licence #

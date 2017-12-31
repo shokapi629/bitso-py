@@ -124,7 +124,8 @@ def start_live_book():
     listener = LiveBookListener()
     client = bitso.bitsows.Client(listener)
     channels = ['diff-orders', 'trades']
-    client.connect(channels)
+    book = "btc_mxn"
+    client.connect(channels, book)
 
             
 if __name__ == '__main__':
