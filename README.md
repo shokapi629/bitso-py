@@ -1,6 +1,6 @@
 # bitso-py #
 
-A Python 2 wrapper for the [Bitso API](https://bitso.com/api_info/) 
+A Python 2 and Python 3 wrapper for the [Bitso API](https://bitso.com/api_info/) 
 
 [![Build Status](https://travis-ci.org/mariorz/python-bitso.svg?branch=master)](https://travis-ci.org/mariorz/python-bitso) [![Requirements Status](https://requires.io/github/mariorz/python-bitso/requirements.svg?branch=master)](https://requires.io/github/mariorz/python-bitso/requirements/?branch=master) 
 
@@ -48,7 +48,7 @@ Decimal('0.00500000')
  Ticker(ask=7866.27, bid=7795.00, high=7866.27, last=7866.27, low=7707.43, datetime=2016-04-22 16:46:25, vwaplow=7795.00)
  >>> tick.last
  Decimal('7866.27')
- >>> tick.datetime
+ >>> tick.created_at
  datetime.datetime(2016, 4, 22, 16, 46, 53)
  ```
 

@@ -30,9 +30,12 @@ import hmac
 import json
 import time
 import requests
-from urlparse import urlparse
-from urllib import urlencode
+from urllib import parse
+from future.standard_library import install_aliases
+from builtins import str
 
+# Python 2 compatibility 
+install_aliases()
 
 from bitso import (ApiError, ApiClientError, Ticker, OrderBook, Balances, Fees, Trade, UserTrade, Order, TransactionQuote, TransactionOrder, LedgerEntry, FundingDestination, Withdrawal, Funding, AvailableBooks, AccountStatus, AccountRequiredField)
 
@@ -328,7 +331,7 @@ class Api(object):
         Returns:
           A list bitso.Withdrawal instances.
         """
-        if isinstance(wids, basestring):
+        if isinstance(wids, str):
             wids = [wids]
         
         url = '%s/withdrawals/' % (self.base_url)
@@ -363,7 +366,7 @@ class Api(object):
         Returns:
           A list bitso.Funding instances.
         """
-        if isinstance(fids, basestring):
+        if isinstance(fids, str):
             fids = [fids]
         
         url = '%s/fundings/' % (self.base_url)
@@ -409,7 +412,7 @@ class Api(object):
         url = '%s/user_trades/' % self.base_url
         if isinstance(tids, int):
             tids = str(tids)
-        if isinstance(tids, basestring):
+        if isinstance(tids, str):
             tids = [tids]
         tids = map(str, tids)
         if tids:
@@ -422,7 +425,7 @@ class Api(object):
         if limit:
             parameters['limit'] = limit
         if sort:
-            if not isinstance(sort, basestring) or sort.lower() not in ['asc', 'desc']:
+            if not isinstance(sort, str) or sort.lower() not in ['asc', 'desc']:
                  raise ApiClientError({u'message': u"sort is not 'asc' or 'desc' "})
             parameters['sort'] = sort
         resp = self._request_url(url, 'GET', params=parameters, private=True)
@@ -456,7 +459,7 @@ class Api(object):
         Returns:
           A list of bitso.Order instances.        
         """
-        if isinstance(oids, basestring):
+        if isinstance(oids, str):
             oids = [oids]
         url = '%s/orders/' % self.base_url
         if oids:
@@ -474,7 +477,7 @@ class Api(object):
         Returns:
           A list of Order IDs (OIDs) for the canceled orders. Orders may not be successfully cancelled if they have been filled, have been already cancelled, or the OIDs are incorrect.        
         """
-        if isinstance(oids, basestring):
+        if isinstance(oids, str):
             oids = [oids]        
         url = '%s/orders/' % self.base_url
         url+='%s/' % ('-'.join(oids))
@@ -879,7 +882,7 @@ class Api(object):
     def _build_auth_header(self, http_method, url, json_payload=''):
         if json_payload == {} or json_payload=='{}':
             json_payload = ''
-        url_components = urlparse(url)
+        url_components = parse.urlparse(url)
         request_path = url_components.path
         if url_components.query != '':
             request_path+='?'+url_components.query
@@ -936,7 +939,7 @@ class Api(object):
                         param_tuples.append((k, single_v))
                 else:
                     param_tuples.append((k,v))
-            return urlencode(param_tuples)
+            return parse.urlencode(param_tuples)
 
 
          
