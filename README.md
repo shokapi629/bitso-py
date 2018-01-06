@@ -16,7 +16,13 @@ A Python 2 wrapper for the [Bitso API](https://bitso.com/api_info/)
 
 ```python
  >>> import bitso
+ 
+## Producer account
  >>> api = bitso.Api(API_KEY, API_SECRET)
+
+## Developer account
+ >>> api = bitso.Api(API_KEY, API_SECRET,"dev")
+  
 ```
 
 
@@ -48,7 +54,7 @@ Decimal('0.00500000')
  Ticker(ask=7866.27, bid=7795.00, high=7866.27, last=7866.27, low=7707.43, datetime=2016-04-22 16:46:25, vwaplow=7795.00)
  >>> tick.last
  Decimal('7866.27')
- >>> tick.datetime
+ >>> tick.created_at
  datetime.datetime(2016, 4, 22, 16, 46, 53)
  ```
 
@@ -256,7 +262,7 @@ Decimal('0.001')
 ##                 - string - 'asc' or
 ##                 - 'desc'
 
->>> fundings = api. fundings()
+>>> fundings = api.fundings()
 >>> fundings
 [Funding(fid=4e28aa988a74d8b9868f400a18d00910, amount=49596.65217865, currency=mxn),
  Funding(fid=3799c39ea8f1ccf6e6bbcaea1a0cbed1, amount=8.12500000, currency=btc)]
@@ -384,7 +390,7 @@ u'true' #on success
 ## Gets a Funding destination address to fund your account
 ## fund_currency  - Specifies the currency you want to fund your account with (btc, eth, mxn)
 ##                            - str
->>> fd = api.funding_destination(''btc')
+>>> fd = api.funding_destination('btc')
 >>> fd
 FundingDestination(account_identifier_name=Bitcoin address)
 ## Returns a FundingDestination object
@@ -476,9 +482,9 @@ The workflow is as follows:
 ## Create transfer using quote
 >>> transfer = api.transfer_create(amount='25.0', currency='MXN', rate=quote.rate, payment_outlet='vo', email_address='mario@ret.io', recipient_given_name='mario romero')
 ## Send bitcoins to address given
->>> print transfer.wallet_address
+>>> print (transfer.wallet_address)
 ## Check Transfer status, after 1 confirmation, pesos are delivered
->>> print api.transfer_status(transfer.id).status
+>>> print (api.transfer_status(transfer.id).status)
 u'confirming'
 ```
 
@@ -503,7 +509,7 @@ u'confirming'
 ##         - string
 
 >>> quote = api.transfer_quote(amount='25.0', currency='MXN')
->>> print quote
+>>> print (quote)
 TransactionQuote(btc_amount=0.00328834, currency=MXN, rate=7602.60, created_at=2016-05-03 00:33:06, expires_at=2016-05-03 00:34:06, gross=25.00)
 >>> quote.btc_amount
 Decimal('0.00328834')
@@ -556,7 +562,7 @@ Decimal('0.00328834')
 ##      - string
 
 >>> transfer = api.transfer_create(amount='25.0', currency='MXN', rate=quote.rate, payment_outlet='vo', email_address='satoshin@gmx.com', recipient_given_name='satoshi nakamoto')
->>> print transfer
+>>> print (transfer)
 TransactionQuote(btc_amount=0.00328834, currency=MXN, rate=7602.60, created_at=2016-05-03 00:33:06, expires_at=2016-05-03 00:34:06, gross=25.00)
 >>> transfer.btc_amount
 Decimal('0.00328834')
@@ -575,7 +581,7 @@ u'3LiLpKyfXJmeDcD5ABGtmHGjkxnZTHnBxv'}
 ##                method.
 ##         - string
 
->>> print api.transfer_status(transfer.id).status
+>>> print (api.transfer_status(transfer.id).status)
 u'confirming'
 
 ```
@@ -596,11 +602,11 @@ from bitso import websocket
 
 class BasicBitsoListener(websocket.Listener):
     def on_connect(self):
-        print "Connected"
+        print ("Connected")
         
     def on_update(self, data):
         for obj in data.updates:
-            print obj
+            print (obj)
         
 if __name__ == '__main__':
     listener = BasicBitsoListener()
