@@ -28,6 +28,7 @@ import os
 import unittest
 import sys
 import requests
+from six import string_types
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -82,7 +83,7 @@ class PublicApiTest(unittest.TestCase):
         self.assertIsInstance(ab, bitso.AvailableBooks)
         for book in ab.books:
             self.assertIsInstance(getattr(ab, book), bitso.Book)
-        self.assertIsInstance(ab.btc_mxn.symbol, basestring)
+        self.assertIsInstance(ab.btc_mxn.symbol, string_types)
         self.assertEquals(ab.btc_mxn.symbol, 'btc_mxn')
         self.assertEquals(ab.btc_mxn.minimum_amount, Decimal(".003"))
         self.assertEquals(ab.btc_mxn.maximum_amount, Decimal("1000.00"))

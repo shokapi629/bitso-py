@@ -29,20 +29,18 @@ import hashlib
 import hmac
 import json
 import time
-import requests
-
 
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
-
 try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
 
+import requests
 
 from bitso import (ApiError, ApiClientError, Ticker, OrderBook, Balances, Fees, Trade, UserTrade, Order, TransactionQuote, TransactionOrder, LedgerEntry, FundingDestination, Withdrawal, Funding, AvailableBooks, AccountStatus, AccountRequiredField)
 
@@ -933,7 +931,7 @@ class Api(object):
                 resp = requests.delete(url, headers=headers)
             except requests.RequestException as e:
                 raise
-        data = self._parse_json(resp.content.decode('utf-8'))
+        data = self._parse_json(resp.content)
         return data
 
     def _build_url(self, url, params):
