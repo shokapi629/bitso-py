@@ -330,7 +330,7 @@ Decimal('7780.00')
 [Order(oid=s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksk9i4h0nyxsc8svlpscuov5, side=buy, price=7000.00, original_amount=0.01000000, created_datetime=2016-04-22 14:31:10)]
 >>> oo[0].price
 Decimal('7000.00')
->>> oo[0].order_id
+>>> oo[0].oid
 s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksl9i4h0nyxsc8svlpscuov5
 
 ```
@@ -384,7 +384,7 @@ u'true' #on success
 ```
 
 
-### Fungind Destination Address ###
+### Funding Destination Address ###
 
 ```python
 ## Gets a Funding destination address to fund your account
