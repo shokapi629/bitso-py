@@ -48,7 +48,7 @@ Decimal('0.00500000')
  Ticker(ask=7866.27, bid=7795.00, high=7866.27, last=7866.27, low=7707.43, datetime=2016-04-22 16:46:25, vwaplow=7795.00)
  >>> tick.last
  Decimal('7866.27')
- >>> tick.datetime
+ >>> tick.created_at
  datetime.datetime(2016, 4, 22, 16, 46, 53)
  ```
 
@@ -256,7 +256,7 @@ Decimal('0.001')
 ##                 - string - 'asc' or
 ##                 - 'desc'
 
->>> fundings = api. fundings()
+>>> fundings = api.fundings()
 >>> fundings
 [Funding(fid=4e28aa988a74d8b9868f400a18d00910, amount=49596.65217865, currency=mxn),
  Funding(fid=3799c39ea8f1ccf6e6bbcaea1a0cbed1, amount=8.12500000, currency=btc)]
@@ -324,7 +324,7 @@ Decimal('7780.00')
 [Order(oid=s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksk9i4h0nyxsc8svlpscuov5, side=buy, price=7000.00, original_amount=0.01000000, created_datetime=2016-04-22 14:31:10)]
 >>> oo[0].price
 Decimal('7000.00')
->>> oo[0].order_id
+>>> oo[0].oid
 s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksl9i4h0nyxsc8svlpscuov5
 
 ```
@@ -378,13 +378,13 @@ u'true' #on success
 ```
 
 
-### Fungind Destination Address ###
+### Funding Destination Address ###
 
 ```python
 ## Gets a Funding destination address to fund your account
 ## fund_currency  - Specifies the currency you want to fund your account with (btc, eth, mxn)
 ##                            - str
->>> fd = api.funding_destination(''btc')
+>>> fd = api.funding_destination('btc')
 >>> fd
 FundingDestination(account_identifier_name=Bitcoin address)
 ## Returns a FundingDestination object
