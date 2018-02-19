@@ -23,9 +23,14 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
+try:
+  basestring
+except NameError:
+  basestring = str
 
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
 import dateutil.parser
 
 
@@ -269,7 +274,7 @@ class WithdrawalFees(BaseModel):
 
     def __init__(self, **kwargs):
         self.currencies = []
-        for currency,fee in kwargs.iteritems():
+        for currency,fee in kwargs.items():
             self.currencies.append(currency)
             setattr(self, currency, Decimal(fee))
 
