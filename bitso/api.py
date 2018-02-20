@@ -343,7 +343,7 @@ class Api(object):
         Returns:
           A list bitso.Withdrawal instances.
         """
-        if isinstance(wids, str):
+        if isinstance(wids, basestring):
             wids = [wids]
         
         url = '%s/withdrawals/' % (self.base_url)
@@ -378,7 +378,7 @@ class Api(object):
         Returns:
           A list bitso.Funding instances.
         """
-        if isinstance(fids, str):
+        if isinstance(fids, basestring):
             fids = [fids]
         
         url = '%s/fundings/' % (self.base_url)
@@ -424,7 +424,7 @@ class Api(object):
         url = '%s/user_trades/' % self.base_url
         if isinstance(tids, int):
             tids = str(tids)
-        if isinstance(tids, str):
+        if isinstance(tids, basestring):
             tids = [tids]
         tids = map(str, tids)
         if tids:
@@ -437,7 +437,7 @@ class Api(object):
         if limit:
             parameters['limit'] = limit
         if sort:
-            if not isinstance(sort, str) or sort.lower() not in ['asc', 'desc']:
+            if not isinstance(sort, basestring) or sort.lower() not in ['asc', 'desc']:
                  raise ApiClientError({u'message': u"sort is not 'asc' or 'desc' "})
             parameters['sort'] = sort
         resp = self._request_url(url, 'GET', params=parameters, private=True)
@@ -471,7 +471,7 @@ class Api(object):
         Returns:
           A list of bitso.Order instances.        
         """
-        if isinstance(oids, str):
+        if isinstance(oids, basestring):
             oids = [oids]
         url = '%s/orders/' % self.base_url
         if oids:
@@ -489,7 +489,7 @@ class Api(object):
         Returns:
           A list of Order IDs (OIDs) for the canceled orders. Orders may not be successfully cancelled if they have been filled, have been already cancelled, or the OIDs are incorrect.        
         """
-        if isinstance(oids, str):
+        if isinstance(oids, basestring):
             oids = [oids]        
         url = '%s/orders/' % self.base_url
         url+='%s/' % ('-'.join(oids))
