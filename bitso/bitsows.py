@@ -25,6 +25,7 @@
 
 from __future__ import print_function
 import json
+
 import websocket
 from .models import StreamUpdate
 

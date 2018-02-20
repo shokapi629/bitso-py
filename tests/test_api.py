@@ -30,6 +30,11 @@ import sys
 import requests
 from six import string_types
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bitso

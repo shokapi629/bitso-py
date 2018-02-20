@@ -24,28 +24,26 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-
 import hashlib
 import hmac
 import json
 import time
 
 
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
-
 import requests
 
+try:
+  basestring
+except NameError:
+  basestring = str
+
+try:
+    from urllib.parse import urlparse, urlencode
+except ImportError:
+    from urlparse import urlparse
+    from urllib import urlencode
 
 from bitso import (ApiError, ApiClientError, Ticker, OrderBook, Balances, Fees, Trade, UserTrade, Order, TransactionQuote, TransactionOrder, LedgerEntry, FundingDestination, Withdrawal, Funding, AvailableBooks, AccountStatus, AccountRequiredField)
-
 
 def current_milli_time():
     nonce =  str(int(round(time.time() * 1000000)))
@@ -861,7 +859,7 @@ class Api(object):
         parameters['rate'] = str(rate)
         parameters['payment_outlet'] = payment_outlet
         for k, v in kwargs.items():
-            parameters[k] = str(v)
+            parameters[k] = str(v).encode('utf-8')
         resp = self._request_url(url, 'POST', params=parameters, private=True)
         return TransactionOrder._NewFromJsonDict(resp['payload']) 
 
@@ -912,6 +910,7 @@ class Api(object):
         headers=None
         if params == None:
             params = {}
+        params = {k: v.decode("utf-8") if isinstance(v, bytes) else v for k, v in params.items()}
         if private:
             headers = self._build_auth_header(verb, url, json.dumps(params))
         if verb == 'GET':
@@ -932,7 +931,9 @@ class Api(object):
                 resp = requests.delete(url, headers=headers)
             except requests.RequestException as e:
                 raise
-        data = self._parse_json(resp.content)
+
+        content = resp.content
+        data = self._parse_json(content if isinstance(content, basestring) else content.decode('utf-8'))
         return data
 
     def _build_url(self, url, params):

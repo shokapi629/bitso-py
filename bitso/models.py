@@ -23,9 +23,14 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
+try:
+  basestring
+except NameError:
+  basestring = str
 
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
 import dateutil.parser
 from six import string_types
 
