@@ -27,6 +27,7 @@
 from decimal import Decimal
 from datetime import datetime
 import dateutil.parser
+from six import string_types
 
 
 class BaseModel(object):
@@ -496,7 +497,7 @@ class OutletDictionary(dict):
             if isinstance(v, dict):
                 self[k] = OutletDictionary(v)
             else:
-                if isinstance(v, basestring) and k in _decimal_keys:
+                if isinstance(v, string_types) and k in _decimal_keys:
                     v = Decimal(v)
                 elif k == 'available':
                     if v=='1':

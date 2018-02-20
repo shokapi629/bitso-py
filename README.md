@@ -1,5 +1,6 @@
 # bitso-py #
 
+
 A Python 2 and Python 3 wrapper for the [Bitso API](https://bitso.com/api_info/) 
 
 [![Build Status](https://travis-ci.org/mariorz/python-bitso.svg?branch=master)](https://travis-ci.org/mariorz/python-bitso) [![Requirements Status](https://requires.io/github/mariorz/python-bitso/requirements.svg?branch=master)](https://requires.io/github/mariorz/python-bitso/requirements/?branch=master) 
@@ -16,7 +17,13 @@ A Python 2 and Python 3 wrapper for the [Bitso API](https://bitso.com/api_info/)
 
 ```python
  >>> import bitso
+ 
+## Production account
  >>> api = bitso.Api(API_KEY, API_SECRET)
+
+## Developer account
+ >>> api = bitso.Api(API_KEY, API_SECRET,"dev")
+  
 ```
 
 
@@ -256,7 +263,7 @@ Decimal('0.001')
 ##                 - string - 'asc' or
 ##                 - 'desc'
 
->>> fundings = api. fundings()
+>>> fundings = api.fundings()
 >>> fundings
 [Funding(fid=4e28aa988a74d8b9868f400a18d00910, amount=49596.65217865, currency=mxn),
  Funding(fid=3799c39ea8f1ccf6e6bbcaea1a0cbed1, amount=8.12500000, currency=btc)]
@@ -324,7 +331,7 @@ Decimal('7780.00')
 [Order(oid=s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksk9i4h0nyxsc8svlpscuov5, side=buy, price=7000.00, original_amount=0.01000000, created_datetime=2016-04-22 14:31:10)]
 >>> oo[0].price
 Decimal('7000.00')
->>> oo[0].order_id
+>>> oo[0].oid
 s5ntlud6oupippk8iigw5dazjdxwq5vibjcwdp32ksl9i4h0nyxsc8svlpscuov5
 
 ```
@@ -378,13 +385,13 @@ u'true' #on success
 ```
 
 
-### Fungind Destination Address ###
+### Funding Destination Address ###
 
 ```python
 ## Gets a Funding destination address to fund your account
 ## fund_currency  - Specifies the currency you want to fund your account with (btc, eth, mxn)
 ##                            - str
->>> fd = api.funding_destination(''btc')
+>>> fd = api.funding_destination('btc')
 >>> fd
 FundingDestination(account_identifier_name=Bitcoin address)
 ## Returns a FundingDestination object
@@ -402,7 +409,7 @@ u'3CEWgs1goBbafUoThjWff4oX4wQKfxqpeV'
 ##         - string
 ## address - The Bitcoin address to send the amount to
 ##         - string
->>> api.btc_withdrawal('14', '0x55f03a62acc946dedcf8a0c47f16ec3892b29e6d')
+>>> api.btc_withdrawal('0.14', '1TVXn5ajmMQEbkiYNobgHVutVtMWcNZGV')
 ok   # Returns 'ok' on success
 ```
 
@@ -414,7 +421,7 @@ ok   # Returns 'ok' on success
 ##         - string
 ## address - The Bitcoin address to send the amount to
 ##         - string
->>> api.eth_withdrawal('1.10', '1TVXn5ajmMQEbkiYNobgHVutVtMWcNZGV')
+>>> api.eth_withdrawal('1.10', '0x55f03a62acc946dedcf8a0c47f16ec3892b29e6d')
 ok   # Returns 'ok' on success
 ```
 
@@ -476,9 +483,9 @@ The workflow is as follows:
 ## Create transfer using quote
 >>> transfer = api.transfer_create(amount='25.0', currency='MXN', rate=quote.rate, payment_outlet='vo', email_address='mario@ret.io', recipient_given_name='mario romero')
 ## Send bitcoins to address given
->>> print transfer.wallet_address
+>>> print(transfer.wallet_address)
 ## Check Transfer status, after 1 confirmation, pesos are delivered
->>> print api.transfer_status(transfer.id).status
+>>> print(api.transfer_status(transfer.id).status)
 u'confirming'
 ```
 
@@ -503,7 +510,7 @@ u'confirming'
 ##         - string
 
 >>> quote = api.transfer_quote(amount='25.0', currency='MXN')
->>> print quote
+>>> print(quote)
 TransactionQuote(btc_amount=0.00328834, currency=MXN, rate=7602.60, created_at=2016-05-03 00:33:06, expires_at=2016-05-03 00:34:06, gross=25.00)
 >>> quote.btc_amount
 Decimal('0.00328834')
@@ -556,7 +563,7 @@ Decimal('0.00328834')
 ##      - string
 
 >>> transfer = api.transfer_create(amount='25.0', currency='MXN', rate=quote.rate, payment_outlet='vo', email_address='satoshin@gmx.com', recipient_given_name='satoshi nakamoto')
->>> print transfer
+>>> print(transfer)
 TransactionQuote(btc_amount=0.00328834, currency=MXN, rate=7602.60, created_at=2016-05-03 00:33:06, expires_at=2016-05-03 00:34:06, gross=25.00)
 >>> transfer.btc_amount
 Decimal('0.00328834')
@@ -575,7 +582,7 @@ u'3LiLpKyfXJmeDcD5ABGtmHGjkxnZTHnBxv'}
 ##                method.
 ##         - string
 
->>> print api.transfer_status(transfer.id).status
+>>> print(api.transfer_status(transfer.id).status)
 u'confirming'
 
 ```
@@ -596,11 +603,11 @@ from bitso import websocket
 
 class BasicBitsoListener(websocket.Listener):
     def on_connect(self):
-        print "Connected"
+        print("Connected")
         
     def on_update(self, data):
         for obj in data.updates:
-            print obj
+            print(obj)
         
 if __name__ == '__main__':
     listener = BasicBitsoListener()
