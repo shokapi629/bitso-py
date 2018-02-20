@@ -45,7 +45,8 @@ if __name__ == '__main__':
     listener = BasicBitsoListener()
     client = Client(listener)
     channels = ['diff-orders']
-    client.connect(channels)
+    book = "btc_mxn"
+    client.connect(channels, book)
     
 
 

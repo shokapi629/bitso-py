@@ -290,7 +290,8 @@ class PrivateApiTest(unittest.TestCase):
                     "book": "eth_mxn",
                     "fee_decimal": "0.001",
                     "fee_percent": "0.1"
-                }]
+                }],
+                "withdrawal_fees":{"btc":"0.001","eth":"0.0025"}
             }
         }
         """)
