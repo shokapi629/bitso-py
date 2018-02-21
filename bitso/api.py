@@ -585,7 +585,7 @@ class Api(object):
 
         Args:
           amount (str):
-            The amount of BTC to withdraw from your account
+            The amount of ETH to withdraw from your account
           address (str):
             The Ethereum address to send the amount to
         

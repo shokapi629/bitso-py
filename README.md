@@ -416,8 +416,8 @@ ok   # Returns 'ok' on success
 ### Ether Withdrawal ###
 
 ```python
-## Triggers a bitcoin withdrawal from your account
-## amount  - The amount of BTC to withdraw from your account
+## Triggers an ether withdrawal from your account
+## amount  - The amount of ETH to withdraw from your account
 ##         - string
 ## address - The Ethereum address to send the amount to
 ##         - string
@@ -433,7 +433,7 @@ ok   # Returns 'ok' on success
 ## Triggers a ripple withdrawal from your account
 ## currency  - The currency to withdraw
 ##         - string
-## amount  - The amount of BTC to withdraw from your account
+## amount  - The amount of currency to withdraw from your account
 ##         - string
 ## address - The ripple address to send the amount to
 ##         - string
