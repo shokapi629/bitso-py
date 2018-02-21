@@ -587,7 +587,7 @@ class Api(object):
           amount (str):
             The amount of BTC to withdraw from your account
           address (str):
-            The Bitcoin address to send the amount to
+            The Ethereum address to send the amount to
         
         Returns:
           ok      
