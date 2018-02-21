@@ -91,8 +91,8 @@ class Api(object):
             self.base_url = "https://dev.bitso.com/api/v3"
     
         else:
-            self.base_url_v2 = "api.bitso.com/v2"
-            self.base_url = "api.bitso.com/v3"
+            self.base_url_v2 = "https://api.bitso.com/v2"
+            self.base_url = "https://api.bitso.com/v3"
         
         self.key = key
         self._secret = secret

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 #
 #The MIT License (MIT)
 #
@@ -39,7 +38,8 @@ class BasicBitsoListener(Listener):
         
     def on_update(self, data):
         for obj in data.updates:
-            print (obj)
+             print (obj)
+
         
 if __name__ == '__main__':
     listener = BasicBitsoListener()

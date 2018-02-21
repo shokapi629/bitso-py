@@ -409,7 +409,7 @@ u'3CEWgs1goBbafUoThjWff4oX4wQKfxqpeV'
 ##         - string
 ## address - The Bitcoin address to send the amount to
 ##         - string
->>> api.btc_withdrawal('0.14', '1TVXn5ajmMQEbkiYNobgHVutVtMWcNZGV')
+>>> api.btc_withdrawal('0.000000001', '1TVXn5ajmMQEbkiYNobgHVutVtMWcNZGV')
 ok   # Returns 'ok' on success
 ```
 
@@ -419,9 +419,9 @@ ok   # Returns 'ok' on success
 ## Triggers a bitcoin withdrawal from your account
 ## amount  - The amount of BTC to withdraw from your account
 ##         - string
-## address - The Bitcoin address to send the amount to
+## address - The Ethereum address to send the amount to
 ##         - string
->>> api.eth_withdrawal('1.10', '0x55f03a62acc946dedcf8a0c47f16ec3892b29e6d')
+>>> api.eth_withdrawal('0.000000001', '0x55f03a62acc946dedcf8a0c47f16ec3892b29e6d')
 ok   # Returns 'ok' on success
 ```
 
