@@ -156,7 +156,7 @@ Decimal('5300.00')
 >>> balances
 Balances(currencies=btc,etc,eth,mxn)
 >>> balances.currencies
-[u'btc', u'etc', u'eth', u'mxn']
+['bch', 'btc', 'etc', 'eth', 'ltc', 'xrp', 'mxn']
 >>> balances.btc.name
 u'btc'
 >>> balances.btc.available
@@ -170,15 +170,15 @@ Decimal('3.46888741')
 ## Your trade fees
 >>> fees = api.fees()
 >>> fees
-Fees(books=btc_mxn,eth_mxn)
+Fees(books=btc_mxn,eth_mxn,xrp_btc,xrp_mxn,eth_btc,bch_btc,ltc_btc,ltc_mxn,bch_mxn,withdrawal_fees=btc,eth,xrp,ltc,bch)
 >>> fees.books
-[u'btc_mxn', u'eth_mxn']
+['btc_mxn', 'eth_mxn', 'xrp_btc', 'xrp_mxn', 'eth_btc', 'bch_btc', 'ltc_btc', 'ltc_mxn', 'bch_mxn']
 >>> fees.btc_mxn
 Fee(book=btc_mxn, fee_percent=0.0000)
 >>> fees.btc_mxn.fee_percent
 Decimal('0.8500')
 >>> fees.withdrawal_fees
-WithdawalFees(curencies=eth,btc)
+WithdawalFees(curencies=btc,eth,xrp,ltc,bch)
 >>> fees.withdrawal_fees.btc
 Decimal('0.001')
 
@@ -364,7 +364,7 @@ u'true' #on success
 
 ```python
 ## Places a buy limit order.
-## [book] - Specifies which book to use (btc_mxn, eth_mxn)
+## [book] - Specifies which book to use (btc_mxn,eth_mxn,xrp_btc,xrp_mxn,eth_btc,bch_btc,ltc_btc,ltc_mxn,bch_mxn)
 ##                    - str
 ## [side] - the order side (buy, sell) 
 ##                    - str
@@ -389,7 +389,7 @@ u'true' #on success
 
 ```python
 ## Gets a Funding destination address to fund your account
-## fund_currency  - Specifies the currency you want to fund your account with (btc, eth, mxn)
+## fund_currency  - Specifies the currency you want to fund your account with (btc,eth,xrp,ltc,bch, mxn)
 ##                            - str
 >>> fd = api.funding_destination('btc')
 >>> fd
@@ -678,6 +678,14 @@ Atribute | Type | Description | Units
 books | list | symbols for each book available | -
 btc_mxn | bitso.Book | btc_mxn bitso.Book Object| -
 eth_mxn | bitso.Book | eth_mxn bitso.Book Object| -
+eth_btc | bitso.Book | eth_btc bitso.Book Object| -
+xrp_mxn | bitso.Book | xrp_mxn bitso.Book Object| -
+xrp_btc | bitso.Book | xrp_btc bitso.Book Object| -
+ltc_btc | bitso.Book | ltc_btc bitso.Book Object| -
+ltc_mxn | bitso.Book | ltc_mxn bitso.Book Object| -
+bch_btc | bitso.Book | bch_btc bitso.Book Object| -
+bch_mxn | bitso.Book | bch_mxn bitso.Book Object| -
+
 
 
 ### bitso.AccountRequiredField
@@ -748,7 +756,14 @@ Atribute | Type | Description | Units
 ------------ | ------------- | ------------- | -------------
 books | list | name for each book | -
 btc_mxn | bitso.Fee | btc_mxn bitso.Fee Object | -
-eth_mxn | bitso.Fee | eth_mxn bitso.Fee Object | -
+eth_mxn | bitso.Fee | eth_mxn bitso.Fee Object| -
+eth_btc | bitso.Fee | eth_btc bitso.Fee Object| -
+xrp_mxn | bitso.Fee | xrp_mxn bitso.Fee Object| -
+xrp_btc | bitso.Fee | xrp_btc bitso.Fee Object| -
+ltc_btc | bitso.Fee | ltc_btc bitso.Fee Object| -
+ltc_mxn | bitso.Fee | ltc_mxn bitso.Fee Object| -
+bch_btc | bitso.Fee | bch_btc bitso.Fee Object| -
+bch_mxn | bitso.Fee | bch_mxn bitso.Fee Object| -
 
 
 
@@ -903,9 +918,9 @@ updates | List | List of (TradeUpdate or OrderUpdate) objects |
 
 # Notations #
 
-**Major** denotes the cryptocurrency, in our case Bitcoin (BTC).
+**Major** denotes the cryptocurrency, in our case Bitcoin (BTC,ETH,XRP,LTC,BCH).
 
-**Minor** denotes fiat currencies such as Mexican Peso (MXN), etc
+**Minor** denotes fiat currencies such as Mexican Peso (MXN) or Bitcoin (BTC).
 
 An order book is always referred to in the API as "Major_Minor". For example: "**btc_mxn**"
 
