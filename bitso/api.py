@@ -187,7 +187,18 @@ class Api(object):
         return [Trade._NewFromJsonDict(x) for x in resp['payload']]
 
 
-        
+    def get_quote(self, **kwargs):
+        url = '%s/conversion_quote/' % self.base_url
+        parameters = {}
+        parameters['from_amount'] = kwargs.get('from_amount')
+        parameters['from_currency'] = kwargs.get('from_currency')
+        parameters['to_amount'] = kwargs.get('to_amount')
+        parameters['to_currency'] = kwargs.get('to_currency')
+
+        resp = self._request_url(url, 'GET', params=parameters, private=True)
+        return resp['payload']
+
+
     def account_status(self):
         """
         Get a user's account status.
