@@ -259,7 +259,11 @@ class Fee(BaseModel):
         self._default_params = {
             'book': kwargs.get('book'),            
             'fee_decimal': Decimal(kwargs.get('fee_decimal')),
-            'fee_percent': Decimal(kwargs.get('fee_percent'))
+            'fee_percent': Decimal(kwargs.get('fee_percent')),
+            'maker_fee_decimal': Decimal(kwargs.get('maker_fee_decimal')),
+            'maker_fee_percent': Decimal(kwargs.get('maker_fee_percent')),
+            'taker_fee_percent': Decimal(kwargs.get('maker_fee_percent')),
+            'taker_fee_decimal': Decimal(kwargs.get('taker_fee_decimal'))
         }
 
         for (param, val) in self._default_params.items():

@@ -291,11 +291,19 @@ class PrivateApiTest(unittest.TestCase):
                 "fees": [{
                     "book": "btc_mxn",
                     "fee_decimal": "0.0001",
-                    "fee_percent": "0.01"
+                    "fee_percent": "0.01",
+                    "taker_fee_decimal": "0.0001",
+                    "taker_fee_percent": "0.01",
+                    "maker_fee_decimal": "0.0001",
+                    "maker_fee_percent": "0.01"
                 }, {
                     "book": "eth_mxn",
                     "fee_decimal": "0.001",
-                    "fee_percent": "0.1"
+                    "fee_percent": "0.1",
+                    "taker_fee_decimal": "0.0001",
+                    "taker_fee_percent": "0.01",
+                    "maker_fee_decimal": "0.0001",
+                    "maker_fee_percent": "0.01"
                 }],
                 "withdrawal_fees":{"btc":"0.001","eth":"0.0025"}
             }
@@ -310,8 +318,11 @@ class PrivateApiTest(unittest.TestCase):
         self.assertEqual(result.btc_mxn.book, "btc_mxn")
         self.assertEqual(result.btc_mxn.fee_decimal, Decimal("0.0001"))
         self.assertEqual(result.btc_mxn.fee_percent, Decimal("0.01"))
-
-    
+        self.assertEqual(result.btc_mxn.taker_fee_decimal, Decimal("0.0001"))
+        self.assertEqual(result.btc_mxn.taker_fee_percent, Decimal("0.01"))
+        self.assertEqual(result.btc_mxn.maker_fee_decimal, Decimal("0.0001"))
+        self.assertEqual(result.btc_mxn.maker_fee_percent, Decimal("0.01"))
+        
     def test_ledger(self):
         with open('tests/ledger.json') as data_file:   
             response = FakeResponse(data_file.read().replace('\n', ''))
