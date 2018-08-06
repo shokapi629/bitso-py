@@ -378,6 +378,8 @@ u'true' #on success
 ##        - string
 ## price  - Price per unit of major. For use only with limit orders
 ##        - string
+## stop   -  Price per unit of major at which to stop and place order. For use only with stop orders.
+##        -  string
 
 >>> order = api.place_order(book='btc_mxn', side='buy', order_type='limit', major='.01', price='7000.00')
 >>> order

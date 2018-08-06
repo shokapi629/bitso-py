@@ -547,6 +547,8 @@ class Api(object):
             parameters['minor'] = str(kwargs['minor'])
         if 'price' in kwargs:
             parameters['price'] = str(kwargs['price'])
+        if 'stop' in kwargs:
+            parameters['stop'] = str(kwargs['stop'])
 
         resp = self._request_url(url, 'POST', params=parameters, private=True)
         return resp['payload']
