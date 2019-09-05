@@ -425,7 +425,7 @@ class BalanceUpdate(BaseModel):
             setattr(self, param, value)
     
     def __repr__(self):
-        return "BalanceUpdate(currency={currency}, amount={amount}".format(
+        return "BalanceUpdate(currency={currency}, amount={amount})".format(
             currency=self.currency,
             amount=self.amount)
 
