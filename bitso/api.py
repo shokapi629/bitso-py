@@ -906,10 +906,7 @@ class Api(object):
         headers=None
         if params == None:
             params = {}
-        params = {k: 
-            v.decode("utf-8") if isinstance(v, bytes) else v 
-            for k, v in params.items()
-        }
+        params = {k: v.decode("utf-8") if isinstance(v, bytes) else v for k, v in params.items()}
         if private:
             headers = self._build_auth_header(verb, url, json.dumps(params))
         if verb == 'GET':
@@ -931,10 +928,7 @@ class Api(object):
             except requests.RequestException as e:
                 raise
         content = resp.content
-        data = self._parse_json(content 
-            if isinstance(content, basestring) 
-            else content.decode('utf-8')
-        )
+        data = self._parse_json(content if isinstance(content, basestring) else content.decode('utf-8'))
         return data
 
     def _build_url(self, url, params):
