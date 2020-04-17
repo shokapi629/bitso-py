@@ -24,14 +24,25 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
+from __future__ import absolute_import
 
 import hashlib
 import hmac
 import json
 import time
 import requests
-from urlparse import urlparse
-from urllib import urlencode
+from future.utils import iteritems
+
+try:
+    basestring
+except NameError:
+    from past.builtins import basestring
+
+try:
+    from urllib.parse import urlparse, urlencode
+except ImportError:
+    from urlparse import urlparse
+    from urllib import urlencode
 
 
 from bitso import (ApiError, ApiClientError, Ticker, OrderBook, Balances, Fees, Trade, UserTrade, Order, TransactionQuote, TransactionOrder, LedgerEntry, FundingDestination, Withdrawal, Funding, AvailableBooks, AccountStatus, AccountRequiredField)
@@ -843,7 +854,7 @@ class Api(object):
         parameters['currency'] = currency
         parameters['rate'] = str(rate).encode('utf-8')
         parameters['payment_outlet'] = payment_outlet
-        for k, v in kwargs.iteritems():
+        for k, v in iteritems(kwargs):
             parameters[k] = str(v).encode('utf-8')
         resp = self._request_url(url, 'POST', params=parameters, private=True)
         return TransactionOrder._NewFromJsonDict(resp['payload']) 
@@ -895,6 +906,7 @@ class Api(object):
         headers=None
         if params == None:
             params = {}
+        params = {k: v.decode("utf-8") if isinstance(v, bytes) else v for k, v in params.items()}
         if private:
             headers = self._build_auth_header(verb, url, json.dumps(params))
         if verb == 'GET':
@@ -915,7 +927,8 @@ class Api(object):
                 resp = requests.delete(url, headers=headers)
             except requests.RequestException as e:
                 raise
-        data = self._parse_json(resp.content.decode('utf-8'))
+        content = resp.content
+        data = self._parse_json(content if isinstance(content, basestring) else content.decode('utf-8'))
         return data
 
     def _build_url(self, url, params):
