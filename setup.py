@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 if os.path.exists('README.md'):
-    long_description = open('README.md').read()
+    long_description = open('README.md', encoding="utf8").read()
 else:
     long_description = 'A python wrapper for the Bitso API.'
 
